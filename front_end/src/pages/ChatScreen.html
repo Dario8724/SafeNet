@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat de Apoio - SafeSpace</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --background: 220 20% 97%;
+      --foreground: 220 30% 12%;
+      --primary: 230 72% 56%;
+      --primary-foreground: 0 0% 100%;
+      --secondary: 220 14% 96%;
+      --secondary-foreground: 220 30% 12%;
+      --accent: 260 60% 58%;
+      --accent-foreground: 0 0% 100%;
+      --muted: 220 14% 96%;
+      --muted-foreground: 220 8% 46%;
+      --card: 0 0% 100%;
+      --border: 220 13% 91%;
+      --ring: 230 72% 56%;
+      --chat-user: 230 72% 56%;
+      --chat-user-foreground: 0 0% 100%;
+      --chat-bot: 220 14% 96%;
+      --chat-bot-foreground: 220 30% 12%;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: hsl(var(--background));
+      color: hsl(var(--foreground));
+    }
+  </style>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            background: "hsl(var(--background))",
+            foreground: "hsl(var(--foreground))",
+            primary: {
+              DEFAULT: "hsl(var(--primary))",
+              foreground: "hsl(var(--primary-foreground))"
+            },
+            secondary: {
+              DEFAULT: "hsl(var(--secondary))",
+              foreground: "hsl(var(--secondary-foreground))"
+            },
+            accent: {
+              DEFAULT: "hsl(var(--accent))",
+              foreground: "hsl(var(--accent-foreground))"
+            },
+            muted: {
+              DEFAULT: "hsl(var(--muted))",
+              foreground: "hsl(var(--muted-foreground))"
+            },
+            card: "hsl(var(--card))",
+            border: "hsl(var(--border))",
+            ring: "hsl(var(--ring))",
+            "chat-user": {
+              DEFAULT: "hsl(var(--chat-user))",
+              foreground: "hsl(var(--chat-user-foreground))"
+            },
+            "chat-bot": {
+              DEFAULT: "hsl(var(--chat-bot))",
+              foreground: "hsl(var(--chat-bot-foreground))"
+            }
+          },
+          animation: {
+            "fade-up": "fadeUp 0.5s ease-out forwards",
+            "scale-in": "scaleIn 0.3s ease-out forwards"
+          },
+          keyframes: {
+            fadeUp: {
+              "0%": { opacity: "0", transform: "translateY(20px)" },
+              "100%": { opacity: "1", transform: "translateY(0)" }
+            },
+            scaleIn: {
+              "0%": { opacity: "0", transform: "scale(0.95)" },
+              "100%": { opacity: "1", transform: "scale(1)" }
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="min-h-screen pt-20 pb-8 flex justify-center items-start">
+  
+  <div class="container max-w-3xl w-full px-4">
+    <!-- Header -->
+    <div class="mb-6 animate-fade-up">
+      <h1 class="text-2xl md:text-3xl font-black tracking-tight">Chat de Apoio</h1>
+      <p class="text-muted-foreground text-sm mt-1">Conversa confidencial e segura 🔒</p>
+    </div>
+
+    <!-- Chat container -->
+    <div class="bg-card border border-border/60 rounded-3xl shadow-sm overflow-hidden animate-fade-up" style="animation-delay: 100ms;">
+      <!-- Messages -->
+      <div id="messagesContainer" class="h-[60vh] overflow-y-auto px-5 md:px-8 py-6 space-y-4">
+        <!-- Message injection -->
+      </div>
+
+      <!-- Input -->
+      <div class="border-t border-border/60 px-5 md:px-8 py-4 bg-muted/30">
+        <div class="flex gap-3">
+          <input
+            id="chatInput"
+            type="text"
+            placeholder="Escreve a tua mensagem..."
+            class="flex-1 bg-card border border-border rounded-xl px-5 py-3 text-sm outline-none focus:ring-2 focus:ring-ring/50 transition-shadow"
+          />
+          <button
+            id="sendButton"
+            disabled
+            class="bg-primary text-primary-foreground rounded-xl p-3 active:scale-95 transition-all duration-150 shadow-md shadow-primary/20 disabled:opacity-40 disabled:pointer-events-none hover:shadow-lg flex items-center justify-center shrink-0"
+            style="width: 46px; height: 46px;"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-send"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // State
+    let messages = [
+      { id: 1, text: "Olá! 👋 Sou o teu assistente de apoio. Estou aqui para te ajudar de forma segura e confidencial.", sender: "bot" },
+      { id: 2, text: "Como te posso ajudar hoje?", sender: "bot" },
+    ];
+    
+    const quickReplies = [
+      "Preciso de ajuda",
+      "Quero denunciar",
+      "Sinto-me triste",
+      "Não sei o que fazer",
+    ];
+    
+    const botResponses = {
+      "Preciso de ajuda": "Claro, estou aqui para te ouvir. Podes contar-me o que se passa? 💙",
+      "Quero denunciar": "Compreendo. Posso ajudar-te a fazer uma denúncia. Queres descrever o que aconteceu?",
+      "Sinto-me triste": "Lamento que estejas a passar por isso. Lembra-te: não estás sozinho/a. Queres falar sobre o que sentes?",
+      "Não sei o que fazer": "Está tudo bem não saber. Vamos falar com calma e encontrar uma solução juntos. 🤝",
+    };
+
+    // DOM Elements
+    const messagesContainer = document.getElementById("messagesContainer");
+    const chatInput = document.getElementById("chatInput");
+    const sendButton = document.getElementById("sendButton");
+
+    // Icons
+    const userIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary-foreground"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`;
+    const botIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-accent-foreground"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg>`;
+
+    // Escape HTML function to prevent XSS
+    function escapeHTML(str) {
+      const p = document.createElement('p');
+      p.innerText = str;
+      return p.innerHTML;
+    }
+
+    // Render Messages
+    function renderMessages() {
+      let html = messages.map(msg => {
+        const isUser = msg.sender === "user";
+        return `
+          <div class="flex gap-3 ${isUser ? "flex-row-reverse" : ""} animate-scale-in">
+            <div class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 mt-1 ${isUser ? "bg-primary" : "bg-accent"}">
+              ${isUser ? userIcon : botIcon}
+            </div>
+            <div class="max-w-[70%] px-5 py-3.5 text-sm leading-relaxed ${isUser ? "bg-chat-user text-chat-user-foreground rounded-2xl rounded-tr-md" : "bg-chat-bot text-chat-bot-foreground rounded-2xl rounded-tl-md"}">
+              ${escapeHTML(msg.text)}
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      // Render Quick Replies inside messages container if messages <= 3
+      if (messages.length <= 3) {
+        html += `
+          <div class="flex flex-wrap gap-2 pt-3 pl-11">
+            ${quickReplies.map(reply => `
+              <button
+                onclick="sendQuickReply('${reply.replace(/'/g, "\\'")}')"
+                class="bg-secondary text-secondary-foreground px-4 py-2.5 rounded-xl text-sm font-semibold active:scale-95 transition-all duration-150 border border-border/60 hover:shadow-md cursor-pointer"
+              >
+                ${reply}
+              </button>
+            `).join('')}
+          </div>
+        `;
+      }
+
+      messagesContainer.innerHTML = html;
+      
+      // Auto-scrolling to bottom
+      setTimeout(() => {
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+      }, 0);
+    }
+
+    // Handle Sending Message
+    window.sendMessage = (text) => {
+      if (!text || !text.trim()) return;
+      
+      const userText = text.trim();
+      messages.push({ id: Date.now(), text: userText, sender: "user" });
+      chatInput.value = "";
+      sendButton.disabled = true;
+      renderMessages();
+
+      setTimeout(() => {
+        const response = botResponses[userText] || "Obrigado por partilhares. Estou aqui para te ouvir e ajudar no que precisares. 💙";
+        messages.push({ id: Date.now() + 1, text: response, sender: "bot" });
+        renderMessages();
+      }, 800);
+    };
+
+    window.sendQuickReply = (text) => {
+      window.sendMessage(text);
+    };
+
+    // Event Listeners
+    chatInput.addEventListener('input', (e) => {
+      sendButton.disabled = !e.target.value.trim();
+    });
+
+    chatInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && chatInput.value.trim()) {
+        window.sendMessage(chatInput.value);
+      }
+    });
+
+    sendButton.addEventListener('click', () => {
+      if (chatInput.value.trim()) {
+        window.sendMessage(chatInput.value);
+      }
+    });
+
+    // Initial render
+    renderMessages();
+  </script>
+</body>
+</html>
