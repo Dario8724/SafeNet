@@ -24,7 +24,7 @@ public class RelatorioPsp {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "psp_id", nullable = false)
-    private AgentePsp agente;
+    private AgentePsp psp;
 
     @Column(name = "descricao", columnDefinition = "TEXT")
     private String descricao;

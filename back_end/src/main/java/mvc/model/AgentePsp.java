@@ -34,6 +34,6 @@ public class AgentePsp {
     @OneToMany(mappedBy = "pspResponsavel", fetch = FetchType.LAZY)
     private List<Denuncia> denunciasAtribuidas;
 
-    @OneToMany(mappedBy = "agente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "psp", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<RelatorioPsp> relatorios;
 }
