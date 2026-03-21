@@ -144,7 +144,7 @@ const SafeNet = {
     localStorage.setItem('safenet_user_type', 'anonymous');
     localStorage.removeItem('safenet_user_profile');
     const params = new URLSearchParams(window.location.search);
-    const redirect = params.get('redirect') || 'HomeScreen.html';
+    const redirect = params.get('redirect') || 'ReportScreen.html';
     window.location.href = redirect;
   },
 
@@ -241,12 +241,47 @@ const SafeNet = {
     const sBtn = document.getElementById('submitBtn');
     if (!desc || !pBtn || !pDrop || !sBtn) return;
 
-    // Verificar login
     const isLoggedIn = localStorage.getItem('safenet_logged_in') === 'true';
-    const userType = localStorage.getItem('safenet_user_type');
-    if (!isLoggedIn || userType === 'anonymous') {
-      window.location.href = 'LoginScreen.html?redirect=ReportScreen.html';
-      return;
+    const userType = localStorage.getItem('safenet_user_type') || '';
+    const needsAuthToSubmit = !isLoggedIn || userType === 'anonymous';
+    const draftKey = 'safenet_report_draft';
+
+    const saveDraft = () => {
+      const draft = {
+        description: desc.value || '',
+        platform: (sPlat && !sPlat.classList.contains('text-muted-foreground')) ? (sPlat.innerText || '') : ''
+      };
+      sessionStorage.setItem(draftKey, JSON.stringify(draft));
+    };
+
+    const restoreDraft = () => {
+      const raw = sessionStorage.getItem(draftKey);
+      if (!raw) return;
+      let draft;
+      try { draft = JSON.parse(raw); } catch { return; }
+      if (draft && typeof draft.description === 'string') desc.value = draft.description;
+      if (draft && typeof draft.platform === 'string' && draft.platform.trim()) {
+        sPlat.innerText = draft.platform.trim();
+        sPlat.classList.remove('text-muted-foreground');
+        sPlat.classList.add('text-foreground');
+      }
+      sessionStorage.removeItem(draftKey);
+    };
+
+    restoreDraft();
+
+    if (needsAuthToSubmit) {
+      const container = document.querySelector('main .container');
+      if (container && !document.getElementById('report-auth-notice')) {
+        const notice = document.createElement('div');
+        notice.id = 'report-auth-notice';
+        notice.className = 'alert alert-warning d-flex align-items-center justify-content-between gap-3 rounded-4 border-0 shadow-sm mb-4';
+        notice.innerHTML = `
+          <div class="fw-semibold text-[#1e293b]">Para submeter a denúncia, tens de fazer login ou registar.</div>
+          <a href="LoginScreen.html?redirect=ReportScreen.html" class="btn btn-sm btn-primary fw-bold rounded-3 px-3">Entrar</a>
+        `;
+        container.prepend(notice);
+      }
     }
 
     const platforms = ["Instagram", "TikTok", "WhatsApp", "Snapchat", "Facebook", "YouTube", "Discord", "Outro"];
@@ -286,6 +321,11 @@ const SafeNet = {
 
     desc.addEventListener('input', (e) => sBtn.disabled = !e.target.value.trim());
     sBtn.addEventListener('click', () => {
+      if (needsAuthToSubmit) {
+        saveDraft();
+        window.location.href = 'LoginScreen.html?redirect=ReportScreen.html';
+        return;
+      }
       if (desc.value.trim()) window.location.href = 'ConfirmationScreen.html';
     });
   },
