@@ -133,7 +133,12 @@
     });
 
     document.getElementById('anonymousLogin').addEventListener('click', () => {
-      runWhenSafeNetReady(() => window.SafeNet.loginAnonymous());
+      const email = (document.getElementById('loginEmail')?.value || '').trim();
+      if (!email) {
+        document.getElementById('loginEmail')?.focus();
+        return;
+      }
+      runWhenSafeNetReady(() => window.SafeNet.loginAnonymous(email));
     });
 
     document.addEventListener('DOMContentLoaded', () => {

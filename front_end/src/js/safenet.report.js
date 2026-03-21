@@ -14,7 +14,7 @@
 
     const isLoggedIn = localStorage.getItem('safenet_logged_in') === 'true';
     const userType = localStorage.getItem('safenet_user_type') || '';
-    const needsAuthToSubmit = !isLoggedIn || userType === 'anonymous';
+    const needsAuthToSubmit = !isLoggedIn;
     const draftKey = 'safenet_report_draft';
 
     const saveDraft = () => {
@@ -105,7 +105,7 @@
       const profileRaw = localStorage.getItem('safenet_user_profile');
       let profile = null;
       try { profile = profileRaw ? JSON.parse(profileRaw) : null; } catch { profile = null; }
-      const reporterName = profile && profile.nome ? profile.nome : 'Utilizador';
+      const reporterName = profile && profile.nome ? profile.nome : (userType === 'anonymous' ? 'Anónimo' : 'Utilizador');
       const reporterPhone = profile && profile.telemovel ? profile.telemovel : '';
       const reporterEmail = profile && profile.email ? profile.email : '';
 
@@ -125,7 +125,7 @@
         description,
         evidenceCount: filesCount,
         reporter: {
-          type: localStorage.getItem('safenet_user_type') || 'citizen',
+          type: userType || 'citizen',
           name: reporterName,
           phone: reporterPhone,
           email: reporterEmail
