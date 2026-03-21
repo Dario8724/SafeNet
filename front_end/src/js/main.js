@@ -329,6 +329,7 @@ const SafeNet = {
       { id: 1, text: "Olá! 👋 Sou o teu assistente de apoio. Estou aqui para te ajudar de forma segura e confidencial.", sender: "bot" },
       { id: 2, text: "Como te posso ajudar hoje?", sender: "bot" },
     ];
+    let emergencyCtaShown = false;
 
     const botResponses = {
       "Preciso de ajuda": "Claro, estou aqui para te ouvir. Podes contar-me o que se passa? 💙",
@@ -371,6 +372,20 @@ const SafeNet = {
       setTimeout(() => {
         const res = botResponses[text.trim()] || "Obrigado por partilhares. Estou aqui para te ouvir e ajudar no que precisares. 💙";
         messages.push({ id: Date.now() + 1, text: res, sender: "bot" });
+        if (!emergencyCtaShown) {
+          emergencyCtaShown = true;
+          messages.push({
+            id: Date.now() + 2,
+            sender: "bot",
+            text: `
+              <div class="fw-bold mb-2">Se estiveres em perigo imediato, liga já para o 112.</div>
+              <a href="tel:112" class="d-inline-flex align-items-center gap-2 bg-primary text-white px-5 py-3 rounded-2xl text-sm fw-black text-decoration-none shadow-lg shadow-primary/25 active:scale-[0.98] transition-all">
+                Ligar 112
+                <span aria-hidden="true">↗</span>
+              </a>
+            `.trim()
+          });
+        }
         render();
       }, 800);
     };
