@@ -559,4 +559,5 @@ const SafeNet = {
   }
 };
 
+window.SafeNet = SafeNet;
 document.addEventListener('DOMContentLoaded', () => SafeNet.init());
