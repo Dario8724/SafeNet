@@ -4,9 +4,6 @@ const SafeNet = {
     this.renderFooter();
     this.initNavbar();
     this.initActiveLinks();
-    this.initAccordions();
-    this.initAlertHandlers();
-    this.initCarousel();
     this.initChat();
     this.initReport();
     this.initResources();
@@ -154,81 +151,11 @@ const SafeNet = {
     });
   },
 
-  initAccordions() {
-    window.toggleAccordion = (trigger) => {
-      const item = trigger.closest('.accordion-item');
-      const content = item.querySelector('.accordion-content');
-      const isOpen = item.getAttribute('data-state') === 'open';
-      const accordion = trigger.closest('.accordion');
-      if (accordion) {
-        accordion.querySelectorAll('.accordion-item').forEach(other => {
-          if (other !== item) {
-            other.setAttribute('data-state', 'closed');
-            const otherContent = other.querySelector('.accordion-content');
-            if (otherContent) otherContent.style.height = '0px';
-          }
-        });
-      }
-      if (isOpen) {
-        item.setAttribute('data-state', 'closed');
-        content.style.height = '0px';
-      } else {
-        item.setAttribute('data-state', 'open');
-        content.style.height = content.scrollHeight + 'px';
-      }
-    };
-    document.querySelectorAll('.accordion-content').forEach(c => c.style.height = '0px');
-  },
 
-  initAlertHandlers() {
-    window.openAlertDialog = (id) => {
-      const o = document.getElementById(`${id}-overlay`);
-      const c = document.getElementById(`${id}-content`);
-      if (o && c) {
-        o.style.display = 'block';
-        c.style.display = 'grid';
-        setTimeout(() => {
-          o.setAttribute('data-state', 'open');
-          c.setAttribute('data-state', 'open');
-        }, 10);
-        document.body.style.overflow = 'hidden';
-      }
-    };
-    window.closeAlertDialog = (id) => {
-      const o = document.getElementById(`${id}-overlay`);
-      const c = document.getElementById(`${id}-content`);
-      if (o && c) {
-        o.setAttribute('data-state', 'closed');
-        c.setAttribute('data-state', 'closed');
-        setTimeout(() => {
-          o.style.display = 'none';
-          c.style.display = 'none';
-          document.body.style.overflow = '';
-        }, 200);
-      }
-    };
-  },
 
-  initCarousel() {
-    const viewportNode = document.getElementById('embla-viewport');
-    if (!viewportNode || typeof EmblaCarousel !== 'function') return;
-    const prevBtn = document.getElementById('carousel-prev');
-    const nextBtn = document.getElementById('carousel-next');
-    const emblaApi = EmblaCarousel(viewportNode, { loop: false });
-    const updateButtons = () => {
-      if (prevBtn) prevBtn.disabled = !emblaApi.canScrollPrev();
-      if (nextBtn) nextBtn.disabled = !emblaApi.canScrollNext();
-    };
-    if (prevBtn) prevBtn.addEventListener('click', () => emblaApi.scrollPrev());
-    if (nextBtn) nextBtn.addEventListener('click', () => emblaApi.scrollNext());
-    emblaApi.on('select', updateButtons);
-    emblaApi.on('init', updateButtons);
-    emblaApi.on('reInit', updateButtons);
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowLeft') emblaApi.scrollPrev();
-      if (e.key === 'ArrowRight') emblaApi.scrollNext();
-    });
-  },
+
+
+
 
   initChat() {
     const container = document.getElementById("messagesContainer");
