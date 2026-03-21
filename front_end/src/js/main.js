@@ -131,25 +131,25 @@ const SafeNet = {
     };
 
     const userIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary-foreground"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`;
-    const botIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-accent-foreground"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg>`;
+    const botIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg>`;
 
     const render = () => {
       container.innerHTML = messages.map(msg => {
         const isUser = msg.sender === "user";
         return `
-          <div class="flex gap-3 ${isUser ? "flex-row-reverse" : ""} animate-scale-in">
-            <div class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 mt-1 ${isUser ? "bg-primary" : "bg-accent"}">
+          <div class="flex gap-4 ${isUser ? "flex-row-reverse" : ""} animate-scale-in">
+            <div class="w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0 mt-1 ${isUser ? "bg-primary" : "bg-[#7c3aed]"}">
               ${isUser ? userIcon : botIcon}
             </div>
-            <div class="max-w-[70%] px-5 py-3.5 text-sm leading-relaxed ${isUser ? "bg-chat-user text-chat-user-foreground rounded-2xl rounded-tr-md" : "bg-chat-bot text-chat-bot-foreground rounded-2xl rounded-tl-md"}">
+            <div class="max-w-[80%] px-5 py-3.5 text-sm leading-relaxed ${isUser ? "bg-primary text-white rounded-2xl rounded-tr-sm" : "bg-[#f1f5f9] text-[#1e293b] rounded-2xl rounded-tl-sm"}">
               ${msg.text}
             </div>
           </div>
         `;
       }).join('');
-      if (messages.length <= 3) {
+      if (messages.length <= 2) {
         const quick = ["Preciso de ajuda", "Quero denunciar", "Sinto-me triste", "Não sei o que fazer"];
-        const qHtml = `<div class="flex flex-wrap gap-2 pt-3 pl-11">${quick.map(r => `<button onclick="SafeNet.sendChat('${r}')" class="bg-secondary text-secondary-foreground px-4 py-2.5 rounded-xl text-sm font-semibold active:scale-95 transition-all duration-150 border border-border/60 hover:shadow-md cursor-pointer">${r}</button>`).join('')}</div>`;
+        const qHtml = `<div class="flex flex-wrap gap-2.5 pt-4 pl-13">${quick.map(r => `<button onclick="SafeNet.sendChat('${r}')" class="bg-[#f1f5f9] text-[#4338ca] px-5 py-2.5 rounded-full text-sm font-semibold active:scale-95 transition-all duration-150 hover:bg-[#e2e8f0] cursor-pointer border-0">${r}</button>`).join('')}</div>`;
         container.innerHTML += qHtml;
       }
       container.scrollTop = container.scrollHeight;
