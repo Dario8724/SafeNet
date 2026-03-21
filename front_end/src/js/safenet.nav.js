@@ -154,10 +154,17 @@
   };
 
   SafeNet.logout = function () {
-    localStorage.removeItem('safenet_logged_in');
-    localStorage.removeItem('safenet_user_type');
-    localStorage.removeItem('safenet_user_profile');
-    window.location.reload();
+    const run = async () => {
+      if (SafeNet.authLogout) await SafeNet.authLogout();
+      else {
+        localStorage.removeItem('safenet_logged_in');
+        localStorage.removeItem('safenet_user_type');
+        localStorage.removeItem('safenet_user_profile');
+        localStorage.removeItem('safenet_auth_token');
+      }
+      window.location.reload();
+    };
+    run();
   };
 
   SafeNet.login = function () {

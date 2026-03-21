@@ -1,6 +1,26 @@
 (() => {
   const SafeNet = window.SafeNet || {};
 
+  SafeNet.getAuthToken = function () {
+    return localStorage.getItem('safenet_auth_token') || '';
+  };
+
+  SafeNet.setAuthToken = function (token) {
+    const t = String(token || '').trim();
+    if (!t) {
+      localStorage.removeItem('safenet_auth_token');
+      return;
+    }
+    localStorage.setItem('safenet_auth_token', t);
+  };
+
+  SafeNet.clearAuth = function () {
+    localStorage.removeItem('safenet_logged_in');
+    localStorage.removeItem('safenet_user_type');
+    localStorage.removeItem('safenet_user_profile');
+    localStorage.removeItem('safenet_auth_token');
+  };
+
   SafeNet.getConfig = function () {
     return window.SAFENET_CONFIG || {};
   };
@@ -40,6 +60,11 @@
     const headers = new Headers(init.headers || {});
     headers.set('Accept', headers.get('Accept') || 'application/json');
 
+    const token = this.getAuthToken();
+    if (token && !headers.get('Authorization')) {
+      headers.set('Authorization', `Bearer ${token}`);
+    }
+
     const hasBody = init.body !== undefined && init.body !== null;
     const isForm = hasBody && (init.body instanceof FormData);
     if (hasBody && !isForm) {
@@ -70,6 +95,15 @@
     }
   };
 
+  SafeNet.getSurveyPath = function () {
+    const cfg = this.getConfig();
+    const raw = (cfg && cfg.surveyPath) ? String(cfg.surveyPath) : '/survey';
+    let p = raw.trim() || '/survey';
+    if (!p.startsWith('/')) p = '/' + p;
+    if (p.endsWith('/')) p = p.slice(0, -1);
+    return p;
+  };
+
   SafeNet.getReportsPath = function () {
     const cfg = this.getConfig();
     const raw = (cfg && cfg.reportsPath) ? String(cfg.reportsPath) : '/reports';
@@ -96,6 +130,112 @@
     } catch {
       return await SafeNet.apiRequest(`${p}/${enc}/status`, { method: 'PUT', body: { status } });
     }
+  };
+  SafeNet.api.createSurvey = async function (payload) {
+    const p = SafeNet.getSurveyPath();
+    return await SafeNet.apiRequest(p, { method: 'POST', body: payload });
+  };
+
+  SafeNet.getAuthLoginPath = function () {
+    const cfg = this.getConfig();
+    const raw = (cfg && cfg.authLoginPath) ? String(cfg.authLoginPath) : '/auth/login';
+    let p = raw.trim() || '/auth/login';
+    if (!p.startsWith('/')) p = '/' + p;
+    if (p.endsWith('/')) p = p.slice(0, -1);
+    return p;
+  };
+
+  SafeNet.getAuthRegisterPath = function () {
+    const cfg = this.getConfig();
+    const raw = (cfg && cfg.authRegisterPath) ? String(cfg.authRegisterPath) : '/auth/register';
+    let p = raw.trim() || '/auth/register';
+    if (!p.startsWith('/')) p = '/' + p;
+    if (p.endsWith('/')) p = p.slice(0, -1);
+    return p;
+  };
+
+  SafeNet.getAuthMePath = function () {
+    const cfg = this.getConfig();
+    const raw = (cfg && cfg.authMePath) ? String(cfg.authMePath) : '/auth/me';
+    let p = raw.trim() || '/auth/me';
+    if (!p.startsWith('/')) p = '/' + p;
+    if (p.endsWith('/')) p = p.slice(0, -1);
+    return p;
+  };
+
+  SafeNet.getAuthLogoutPath = function () {
+    const cfg = this.getConfig();
+    const raw = (cfg && cfg.authLogoutPath) ? String(cfg.authLogoutPath) : '/auth/logout';
+    let p = raw.trim() || '/auth/logout';
+    if (!p.startsWith('/')) p = '/' + p;
+    if (p.endsWith('/')) p = p.slice(0, -1);
+    return p;
+  };
+
+  SafeNet.authLogin = async function (credentials) {
+    const payload = credentials ? { ...credentials } : {};
+    const redirect = String(payload.redirect || '').trim();
+    delete payload.redirect;
+
+    const resp = await this.apiRequest(this.getAuthLoginPath(), { method: 'POST', body: payload });
+
+    const token = (resp && (resp.token || resp.accessToken || resp.jwt)) || '';
+    if (token) this.setAuthToken(token);
+
+    const role = (resp && (resp.userType || resp.role || resp.perfil)) || payload.userType || '';
+    if (role) localStorage.setItem('safenet_user_type', String(role).toLowerCase());
+    localStorage.setItem('safenet_logged_in', 'true');
+
+    const profile =
+      (resp && (resp.profile || resp.user)) ||
+      (resp && resp.data && (resp.data.profile || resp.data.user)) ||
+      null;
+    if (profile && typeof profile === 'object') {
+      localStorage.setItem('safenet_user_profile', JSON.stringify(profile));
+    }
+
+    if (redirect) window.location.href = redirect;
+    return resp;
+  };
+
+  SafeNet.authRegister = async function (data) {
+    const payload = data ? { ...data } : {};
+    const redirect = String(payload.redirect || '').trim();
+    delete payload.redirect;
+
+    const resp = await this.apiRequest(this.getAuthRegisterPath(), { method: 'POST', body: payload });
+
+    const token = (resp && (resp.token || resp.accessToken || resp.jwt)) || '';
+    if (token) this.setAuthToken(token);
+
+    const role = (resp && (resp.userType || resp.role || resp.perfil)) || payload.userType || payload.tipo || '';
+    if (role) localStorage.setItem('safenet_user_type', String(role).toLowerCase());
+    localStorage.setItem('safenet_logged_in', 'true');
+
+    const profile =
+      (resp && (resp.profile || resp.user)) ||
+      (resp && resp.data && (resp.data.profile || resp.data.user)) ||
+      null;
+    if (profile && typeof profile === 'object') {
+      localStorage.setItem('safenet_user_profile', JSON.stringify(profile));
+    }
+
+    if (redirect) window.location.href = redirect;
+    return resp;
+  };
+
+  SafeNet.authMe = async function () {
+    const resp = await this.apiRequest(this.getAuthMePath(), { method: 'GET' });
+    const role = (resp && (resp.userType || resp.role || resp.perfil)) || '';
+    if (role) localStorage.setItem('safenet_user_type', String(role).toLowerCase());
+    localStorage.setItem('safenet_logged_in', 'true');
+    if (resp && typeof resp === 'object') localStorage.setItem('safenet_user_profile', JSON.stringify(resp));
+    return resp;
+  };
+
+  SafeNet.authLogout = async function () {
+    try { await this.apiRequest(this.getAuthLogoutPath(), { method: 'POST' }); } catch { }
+    this.clearAuth();
   };
 
   SafeNet.init = function () {

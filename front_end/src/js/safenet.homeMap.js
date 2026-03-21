@@ -229,8 +229,8 @@
       try {
         let savedRemote = false;
         try {
-          if (SafeNet.apiRequest) {
-            await SafeNet.apiRequest('/survey', { method: 'POST', body: payload });
+          if (SafeNet.api && SafeNet.api.createSurvey) {
+            await SafeNet.api.createSurvey(payload);
             savedRemote = true;
           }
         } catch {

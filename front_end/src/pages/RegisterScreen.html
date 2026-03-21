@@ -43,6 +43,7 @@
           </button>
         </div>
 
+        <div id="registerError" class="alert alert-danger rounded-4 border-0 shadow-sm d-none mb-4"></div>
         <form id="registerForm" class="space-y-6">
           <div>
             <label class="text-xs font-bold uppercase tracking-widest text-[#1e293b] mb-2 block ml-1">Nome</label>
@@ -157,18 +158,53 @@
 
     document.getElementById('registerForm').addEventListener('submit', (e) => {
       e.preventDefault();
+      const err = document.getElementById('registerError');
+      if (err) {
+        err.classList.add('d-none');
+        err.innerText = '';
+      }
+      const btn = e.target.querySelector('button[type="submit"]');
+
       const profile = {
         nome: document.getElementById('regName').value.trim(),
         sexo: document.getElementById('regSexo').value,
         email: document.getElementById('regEmail').value.trim(),
+        password: document.getElementById('regPassword').value.trim(),
         dataNascimento: document.getElementById('regDob').value,
         telemovel: document.getElementById('regPhone').value.trim(),
         tipo: currentUserType,
         identificacaoPSP: currentUserType === 'psp' ? document.getElementById('registerBadgeNumber').value.trim() : ''
       };
-      localStorage.setItem('safenet_user_profile', JSON.stringify(profile));
-      localStorage.setItem('safenet_user_type', currentUserType);
-      runWhenSafeNetReady(() => window.SafeNet.login());
+
+      if (btn) btn.disabled = true;
+      runWhenSafeNetReady(async () => {
+        try {
+          const params = new URLSearchParams(window.location.search);
+          const redirect = params.get('redirect') || (currentUserType === 'psp' ? 'PSPScreen.html' : 'HomeScreen.html');
+
+          if (window.SafeNet && window.SafeNet.authRegister) {
+            await window.SafeNet.authRegister({
+              userType: currentUserType,
+              ...profile,
+              redirect
+            });
+            return;
+          }
+
+          const { password, ...safeProfile } = profile;
+          localStorage.setItem('safenet_user_profile', JSON.stringify(safeProfile));
+          localStorage.setItem('safenet_user_type', currentUserType);
+          localStorage.setItem('safenet_logged_in', 'true');
+          window.location.href = redirect;
+        } catch (e) {
+          if (err) {
+            err.classList.remove('d-none');
+            err.innerText = 'Não foi possível criar a conta. Tenta novamente.';
+          }
+        } finally {
+          if (btn) btn.disabled = false;
+        }
+      });
     });
   </script>
 </body>

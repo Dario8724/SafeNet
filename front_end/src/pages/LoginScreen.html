@@ -44,6 +44,7 @@
         </div>
 
         <div id="loginView">
+          <div id="loginError" class="alert alert-danger rounded-4 border-0 shadow-sm d-none mb-4"></div>
           <form id="loginForm" class="space-y-6">
             <div id="badgeField" class="hidden animate-scale-in">
               <label class="text-xs font-bold uppercase tracking-widest text-[#1e293b] mb-2 block ml-1">Nº de
@@ -124,8 +125,52 @@
 
     document.getElementById('loginForm').addEventListener('submit', (e) => {
       e.preventDefault();
-      localStorage.setItem('safenet_user_type', currentUserType);
-      runWhenSafeNetReady(() => window.SafeNet.login());
+
+      const btn = e.target.querySelector('button[type="submit"]');
+      const err = document.getElementById('loginError');
+      if (err) {
+        err.classList.add('d-none');
+        err.innerText = '';
+      }
+
+      const email = (document.getElementById('loginEmail')?.value || '').trim();
+      const password = (document.getElementById('loginPassword')?.value || '').trim();
+      const badgeNumber = (document.getElementById('loginBadgeNumber')?.value || '').trim();
+      if (!email || !password) return;
+      if (currentUserType === 'psp' && !badgeNumber) {
+        document.getElementById('loginBadgeNumber')?.focus();
+        return;
+      }
+
+      const params = new URLSearchParams(window.location.search);
+      const redirect = params.get('redirect') || (currentUserType === 'psp' ? 'PSPScreen.html' : 'HomeScreen.html');
+
+      if (btn) btn.disabled = true;
+      runWhenSafeNetReady(async () => {
+        try {
+          if (window.SafeNet && window.SafeNet.authLogin) {
+            await window.SafeNet.authLogin({
+              userType: currentUserType,
+              email,
+              password,
+              badgeNumber: currentUserType === 'psp' ? badgeNumber : '',
+              redirect
+            });
+            return;
+          }
+
+          localStorage.setItem('safenet_user_type', currentUserType);
+          localStorage.setItem('safenet_logged_in', 'true');
+          window.location.href = redirect;
+        } catch (e) {
+          if (err) {
+            err.classList.remove('d-none');
+            err.innerText = 'Não foi possível iniciar sessão. Confirma os dados e tenta novamente.';
+          }
+        } finally {
+          if (btn) btn.disabled = false;
+        }
+      });
     });
 
     document.addEventListener('DOMContentLoaded', () => {
