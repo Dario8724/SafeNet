@@ -63,3 +63,7 @@ tailwind.config = {
     }
   }
 }
+
+window.SAFENET_CONFIG = window.SAFENET_CONFIG || {};
+window.SAFENET_CONFIG.apiBaseUrl = window.SAFENET_CONFIG.apiBaseUrl || localStorage.getItem('safenet_api_base') || 'http://localhost:8080';
+window.SAFENET_CONFIG.apiPrefix = window.SAFENET_CONFIG.apiPrefix || '/api';

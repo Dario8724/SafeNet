@@ -131,13 +131,15 @@
 
     desc.addEventListener('input', updateSubmitState);
     updateSubmitState();
-    sBtn.addEventListener('click', () => {
+    let submitting = false;
+    sBtn.addEventListener('click', async () => {
       if (needsAuthToSubmit) {
         saveDraft();
         window.location.href = 'LoginScreen.html?redirect=ReportScreen.html';
         return;
       }
 
+      if (submitting) return;
       const description = desc.value.trim();
       if (!description) return;
       const selectedType = requiresType && typeField ? (typeField.value || '').trim() : '';
@@ -157,10 +159,10 @@
       try { existing = existingRaw ? JSON.parse(existingRaw) : []; } catch { existing = []; }
       if (!Array.isArray(existing)) existing = [];
 
-      const id = `SN-${new Date().getFullYear()}-${String(existing.length + 1).padStart(5, '0')}`;
+      const fallbackId = `SN-${new Date().getFullYear()}-${String(existing.length + 1).padStart(5, '0')}`;
       const filesCount = fInp && fInp.files ? fInp.files.length : 0;
       const report = {
-        id,
+        id: fallbackId,
         createdAt: new Date().toISOString(),
         status: 'Pendente',
         type: selectedType || 'Não indicado',
@@ -175,9 +177,37 @@
         }
       };
 
-      existing.unshift(report);
-      localStorage.setItem(reportsKey, JSON.stringify(existing.slice(0, 200)));
-      sessionStorage.setItem('safenet_last_report_id', id);
+      submitting = true;
+      sBtn.disabled = true;
+      let finalId = fallbackId;
+      let savedRemote = false;
+      try {
+        if (SafeNet.api && typeof SafeNet.api.createReport === 'function') {
+          const apiPayload = {
+            ...report,
+            reporterType: report.reporter ? report.reporter.type : '',
+            reporterName: report.reporter ? report.reporter.name : '',
+            reporterPhone: report.reporter ? report.reporter.phone : '',
+            reporterEmail: report.reporter ? report.reporter.email : ''
+          };
+          const resp = await SafeNet.api.createReport(apiPayload);
+          const remoteId =
+            (resp && (resp.id || resp.reportId || resp.reference || resp.codigo)) ||
+            (resp && resp.data && (resp.data.id || resp.data.reportId)) ||
+            '';
+          if (remoteId && String(remoteId).trim()) finalId = String(remoteId).trim();
+          savedRemote = true;
+        }
+      } catch {
+        savedRemote = false;
+      }
+
+      if (!savedRemote) {
+        existing.unshift(report);
+        localStorage.setItem(reportsKey, JSON.stringify(existing.slice(0, 200)));
+      }
+
+      sessionStorage.setItem('safenet_last_report_id', finalId);
       window.location.href = 'ConfirmationScreen.html';
     });
   };
