@@ -32,10 +32,19 @@
   </component>
   <component name="CopilotPersistence">
     <persistenceIdMap>
+      <entry key="_C:/Users/alexr/IdeaProjects/SafeNet/back_end" value="3BG9st444qguksJ6dGx132cVFRg" />
       <entry key="_C:/Users/tahaw/OneDrive/Desktop/JusticeLeague/back_end" value="3BEP0qurXi5LfCeVU5HJqAxAsyU" />
     </persistenceIdMap>
   </component>
+  <component name="EmbeddingIndexingInfo">
+    <option name="cachedIndexableFilesCount" value="77" />
+  </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$/.." value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -49,7 +58,7 @@
     "url": "https://github.com/Dario8724/SafeNet.git",
     "accountId": "01cb1721-bdec-4675-83ce-68ed4fa2bfed"
   }
-}]]></component>
+}</component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
@@ -97,7 +106,7 @@
       "mysql_aurora"
     ]
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="JusticeLeagueApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="JusticeLeague" />
@@ -133,7 +142,15 @@
       <option name="project" value="LOCAL" />
       <updated>1774052222809</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="ceiando as pastasv">
+      <option name="closed" value="true" />
+      <created>1774116359210</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1774116359210</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
