@@ -11,6 +11,8 @@
     const filterPlatform = document.getElementById('pspFilterPlatform');
     const seedBtn = document.getElementById('pspSeedDemo');
     const clearBtn = document.getElementById('pspClearAll');
+    const quickSearch = document.getElementById('pspQuickSearch');
+    const quickHistory = document.getElementById('pspQuickHistory');
     const modalEl = document.getElementById('pspReportModal');
     if (!tbody || !totalEl || !pendingEl || !inProgressEl || !resolvedEl) return;
 
@@ -182,6 +184,30 @@
       clearBtn.addEventListener('click', () => {
         saveReports([]);
         render();
+      });
+    }
+
+    const reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const scrollTo = (el) => {
+      if (!el || !el.scrollIntoView) return;
+      el.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'center' });
+    };
+
+    if (quickSearch) {
+      quickSearch.addEventListener('click', () => {
+        if (filterStatus) {
+          scrollTo(filterStatus);
+          filterStatus.focus();
+        } else if (filterPlatform) {
+          scrollTo(filterPlatform);
+          filterPlatform.focus();
+        }
+      });
+    }
+
+    if (quickHistory) {
+      quickHistory.addEventListener('click', () => {
+        scrollTo(tbody);
       });
     }
 
