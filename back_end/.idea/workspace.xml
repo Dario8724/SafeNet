@@ -5,8 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="64ac8830-6071-4ed9-a07f-cad699eccabc" name="Changes" comment="ceiando as pastasv">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pt/app/JusticeLeague/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pt/app/JusticeLeague/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pt/app/JusticeLeague/controller/EvidenciaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pt/app/JusticeLeague/controller/EvidenciaController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pt/app/JusticeLeague/dto/response/DenunciaResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pt/app/JusticeLeague/dto/response/DenunciaResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pt/app/JusticeLeague/model/Evidencia.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pt/app/JusticeLeague/model/Evidencia.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pt/app/JusticeLeague/security/JwtFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pt/app/JusticeLeague/security/JwtFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pt/app/JusticeLeague/service/AuthService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pt/app/JusticeLeague/service/AuthService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pt/app/JusticeLeague/service/EvidenciaService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pt/app/JusticeLeague/service/EvidenciaService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/mvc/Main.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/mvc/controller/HeroController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/mvc/model/Hero.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/mvc/view/HeroView.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pt/app/JusticeLeague/JusticeLeagueApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pt/app/JusticeLeague/JusticeLeagueApplication.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,16 +38,16 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "TPereira324"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;TPereira324&quot;
   }
-}]]></component>
+}</component>
   <component name="GithubPullRequestsUISettings"><![CDATA[{
   "selectedUrlAndAccountId": {
-    "url": "https://github.com/Dario8724/JusticeLeague.git",
-    "accountId": "63a27d44-5a17-404d-8fa8-be0bd6cb872e"
+    "url": "https://github.com/Dario8724/SafeNet.git",
+    "accountId": "01cb1721-bdec-4675-83ce-68ed4fa2bfed"
   }
 }]]></component>
   <component name="MavenImportPreferences">
@@ -43,9 +57,10 @@
       </MavenGeneralSettings>
     </option>
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 0
-}]]></component>
+  <component name="PhpDebugGeneral" listening_started="true" />
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 0
+}</component>
   <component name="ProjectId" id="3BEP0qurXi5LfCeVU5HJqAxAsyU" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -62,19 +77,25 @@
     "RunOnceActivity.git.unshallow": "true",
     "Spring Boot.JusticeLeagueApplication.executor": "Run",
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
-    "git-widget-placeholder": "taha-wur",
+    "git-widget-placeholder": "dev5",
     "ignore.virus.scanning.warn.message": "true",
     "junie.onboarding.icon.badge.shown": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/tahaw/OneDrive/Desktop/JusticeLeague/back_end",
+    "last_opened_file_path": "C:/Users/chani/OneDrive/Desktop/SafeNet-1/back_end",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "MavenSettings",
+    "settings.editor.selected.configurable": "database.query.execution",
     "to.speed.mode.migration.done": "true",
     "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mysql",
+      "mysql_aurora"
+    ]
   }
 }]]></component>
   <component name="RunManager">
@@ -89,8 +110,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.26830.84" />
-        <option value="bundled-js-predefined-d6986cc7102b-3aa1da707db6-JavaScript-IU-252.26830.84" />
+        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.28539.33" />
+        <option value="bundled-js-predefined-d6986cc7102b-a71380e98a7c-JavaScript-IU-252.28539.33" />
       </set>
     </attachedChunks>
   </component>
@@ -102,6 +123,7 @@
       <option name="presentableId" value="Default" />
       <updated>1774051035923</updated>
       <workItem from="1774051037124" duration="6196000" />
+      <workItem from="1774116637068" duration="8633000" />
     </task>
     <task id="LOCAL-00001" summary="ceiando as pastasv">
       <option name="closed" value="true" />
