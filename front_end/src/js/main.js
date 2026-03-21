@@ -4,6 +4,7 @@ const SafeNet = {
     this.renderFooter();
     this.initNavbar();
     this.initActiveLinks();
+    this.initHomeMap();
     this.initChat();
     this.initReport();
     this.initResources();
@@ -85,6 +86,104 @@ const SafeNet = {
     }, { threshold: 0.1 });
 
     document.querySelectorAll('.animate-reveal').forEach(el => observer.observe(el));
+  },
+
+  initHomeMap() {
+    const iframe = document.getElementById('psp-map-iframe');
+    if (!iframe) return;
+    const buttons = Array.from(document.querySelectorAll('[data-map-query]'));
+    const regionBadges = Array.from(document.querySelectorAll('[data-map-region]:not([data-map-query])'));
+    const regionLabel = document.getElementById('psp-stations-region');
+    const stationsList = document.getElementById('psp-stations-list');
+    if (buttons.length === 0) return;
+
+    const setActive = (activeBtn) => {
+      buttons.forEach(btn => {
+        btn.classList.remove('btn-primary');
+        btn.classList.add('btn-light');
+        btn.classList.add('border');
+      });
+      activeBtn.classList.remove('btn-light');
+      activeBtn.classList.remove('border');
+      activeBtn.classList.add('btn-primary');
+    };
+
+    const setMap = (query) => {
+      iframe.src = `https://www.google.com/maps?q=${encodeURIComponent(query)}&output=embed`;
+    };
+
+    const renderStations = (region) => {
+      if (!regionLabel || !stationsList) return;
+      regionLabel.innerText = region || 'Todas';
+      const r = (region && region !== 'Todas') ? region : '';
+      const items = [
+        {
+          title: r ? `Pesquisar esquadras da PSP em ${r}` : 'Pesquisar esquadras da PSP (todas as regiões)',
+          query: r ? `Esquadra PSP ${r}` : 'Esquadra PSP'
+        },
+        {
+          title: r ? `Pesquisar postos/atendimento PSP em ${r}` : 'Pesquisar postos/atendimento PSP',
+          query: r ? `PSP posto atendimento ${r}` : 'PSP posto atendimento'
+        },
+        {
+          title: r ? `Abrir lista no Google Maps (${r})` : 'Abrir lista no Google Maps',
+          url: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(r ? `Esquadra PSP ${r}` : 'Esquadra PSP')}`
+        }
+      ];
+
+      stationsList.innerHTML = items.map(item => {
+        if (item.url) {
+          return `
+            <a href="${item.url}" target="_blank" rel="noopener"
+              class="d-flex align-items-center justify-content-between px-4 py-3 rounded-4 border border-black/5 bg-[#f8f9fa] text-decoration-none">
+              <span class="fw-bold text-[#1e293b] small">${item.title}</span>
+              <span class="text-muted-foreground small">↗</span>
+            </a>
+          `;
+        }
+        return `
+          <button type="button" data-map-query="${item.query}" data-map-region="${region || 'Todas'}"
+            class="d-flex align-items-center justify-content-between px-4 py-3 rounded-4 border border-black/5 bg-[#f8f9fa] w-100 text-start">
+            <span class="fw-bold text-[#1e293b] small">${item.title}</span>
+            <span class="text-muted-foreground small">→</span>
+          </button>
+        `;
+      }).join('');
+
+      stationsList.querySelectorAll('button[data-map-query]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const query = btn.getAttribute('data-map-query') || 'Esquadra PSP';
+          setMap(query);
+        });
+      });
+    };
+
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const query = btn.getAttribute('data-map-query') || 'Esquadra PSP';
+        const region = btn.getAttribute('data-map-region') || 'Todas';
+        setMap(query);
+        setActive(btn);
+        renderStations(region);
+      });
+    });
+
+    regionBadges.forEach(badge => {
+      badge.addEventListener('click', () => {
+        const region = badge.getAttribute('data-map-region') || 'Todas';
+        const match = buttons.find(b => (b.getAttribute('data-map-region') || '') === region);
+        if (match) {
+          match.click();
+          return;
+        }
+        setMap(region === 'Todas' ? 'Esquadra PSP' : `Esquadra PSP ${region}`);
+        renderStations(region);
+      });
+    });
+
+    const initial = buttons[0];
+    setActive(initial);
+    renderStations(initial.getAttribute('data-map-region') || 'Todas');
   },
 
   initNavbar() {
