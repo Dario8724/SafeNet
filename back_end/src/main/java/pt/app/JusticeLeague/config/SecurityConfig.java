@@ -34,14 +34,14 @@ public class SecurityConfig {
             .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
 
-                // ---- Rotas públicas (sem token) ----
+                // Rotas públicas (sem token)
                 .requestMatchers("/api/auth/register").permitAll()
                 .requestMatchers("/api/auth/login").permitAll()
                 .requestMatchers("/api/auth/login/psp").permitAll()
                 .requestMatchers("/api/auth/verify").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/recursos/**").permitAll()
 
-                // ---- Cidadão autenticado ----
+                //  Cidadão autenticado
                 .requestMatchers("/api/auth/me").hasAnyRole("UTILIZADOR", "PSP")
                 .requestMatchers(HttpMethod.POST, "/api/denuncias").hasRole("UTILIZADOR")
                 .requestMatchers(HttpMethod.GET,  "/api/denuncias/minhas").hasRole("UTILIZADOR")
@@ -51,7 +51,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.POST, "/api/chat/**").hasAnyRole("UTILIZADOR", "PSP")
                 .requestMatchers("/api/notificacoes/**").hasAnyRole("UTILIZADOR", "PSP")
 
-                // ---- Apenas PSP ----
+                // Apenas PSP
                 .requestMatchers("/api/psp/**").hasRole("PSP")
                 .requestMatchers(HttpMethod.PATCH, "/api/denuncias/**").hasRole("PSP")
                 .requestMatchers(HttpMethod.GET,   "/api/denuncias").hasRole("PSP")

@@ -58,3 +58,4 @@ public interface DenunciaRepository extends JpaRepository<Denuncia, Long> {
     @Query("SELECT d FROM Denuncia d WHERE d.dataRegisto >= :desde AND d.grauPerigo = 'ALTO'")
     List<Denuncia> findUrgentesDesde(@Param("desde") LocalDateTime desde);
 }
+

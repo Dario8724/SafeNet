@@ -10,7 +10,7 @@ import lombok.*;
 public class AuthResponse {
 
     private String token;
-    private String tipo;        // "UTILIZADOR" ou "PSP"
+    private String tipo;
     private String nome;
     private String email;
     private boolean verificado;

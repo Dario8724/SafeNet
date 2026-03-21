@@ -128,6 +128,18 @@ INSERT INTO tipo_denuncia (nome, descricao) VALUES
 ('Burla Online', 'Fraude em compras ou investimentos na internet.'),
 ('Cyberbullying', 'Assédio ou perseguição através de meios digitais.'),
 ('Hacking', 'Acesso não autorizado a sistemas ou contas.'),
+('Cyberstalking', 'Perseguição online com monitorização constante e ameaças que causam medo à vítima'),
+('Doxxing', 'Divulgação de dados pessoais privados com intenção de incitar assédio'),
+('Catfishing', 'Criação de identidade falsa para enganar emocionalmente ou extorquir a vítima'),
+('Fraping', 'Uso indevido da conta de outra pessoa para publicar conteúdos ofensivos'),
+('Masquerading', 'Criação de identidade anónima para perseguir e atacar a vítima'),
+('Trolling', 'Provocações repetidas com insultos dirigidos a uma pessoa específica'),
+('Cyber-baiting', 'Provocar alguém até reagir agressivamente e divulgar essa reação online'),
+('Roasting', 'Críticas que evoluem para humilhação coletiva e ataques pessoais'),
+('Griefing', 'Assédio em jogos online para prejudicar a experiência de outros jogadores'),
+('Sextortion', 'Chantagem com imagens íntimas para obter dinheiro ou mais conteúdo'),
+('Slut-shaming', 'Humilhação baseada na aparência ou comportamento sexual'),
+('Happy Slapping', 'Agressão física filmada para partilha e humilhação online'),
 ('Outros', 'Outros crimes de natureza informática.');
 
 INSERT INTO esquadra (nome, distrito, concelho, latitude, longitude, contacto, especializada_ciber) VALUES 
