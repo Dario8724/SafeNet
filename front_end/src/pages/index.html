@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SafeSpace UI</title>
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Fonte -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --background: 220 20% 97%;
+      --foreground: 220 30% 12%;
+      --primary: 230 72% 56%;
+      --accent: 260 60% 58%;
+      --destructive: 0 65% 58%;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: hsl(var(--background));
+      color: hsl(var(--foreground));
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, hsl(230 72% 56%), hsl(260 60% 58%));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .card-hover {
+      transition: 0.3s;
+    }
+    .card-hover:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px -12px hsl(230 72% 56% / 0.15);
+    }
+  </style>
+</head>
+
+<body class="min-h-screen flex flex-col">
+
+  <!-- HEADER -->
+  <header class="p-4 text-center">
+    <h1 class="text-2xl font-bold gradient-text">SafeSpace</h1>
+    <p class="text-sm text-gray-500">Não estás sozinho 💜</p>
+  </header>
+
+  <!-- MAIN -->
+  <main class="flex-1 p-4">
+
+    <!-- BOTÕES PRINCIPAIS -->
+    <div class="grid grid-cols-2 gap-4">
+
+      <div class="bg-white p-4 rounded-xl shadow card-hover">
+        <h2 class="font-semibold">💬 Chat</h2>
+        <p class="text-sm text-gray-500">Falar com apoio</p>
+      </div>
+
+      <div class="bg-white p-4 rounded-xl shadow card-hover">
+        <h2 class="font-semibold">🚨 Denunciar</h2>
+        <p class="text-sm text-gray-500">Submeter denúncia</p>
+      </div>
+
+      <div class="bg-white p-4 rounded-xl shadow card-hover">
+        <h2 class="font-semibold">📚 Recursos</h2>
+        <p class="text-sm text-gray-500">Aprender mais</p>
+      </div>
+
+      <div class="bg-white p-4 rounded-xl shadow card-hover">
+        <h2 class="font-semibold">👤 Perfil</h2>
+        <p class="text-sm text-gray-500">Definições</p>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- NAVBAR -->
+  <nav class="fixed bottom-0 left-0 right-0 bg-white border-t flex justify-around p-3">
+
+    <button class="text-blue-600 font-semibold">Chat</button>
+    <button class="text-gray-500">Denúncia</button>
+    <button class="text-gray-500">Recursos</button>
+    <button class="text-gray-500">Perfil</button>
+
+  </nav>
+
+</body>
+</html>
