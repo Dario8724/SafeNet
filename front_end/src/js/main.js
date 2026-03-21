@@ -127,11 +127,22 @@ const SafeNet = {
 
   logout() {
     localStorage.removeItem('safenet_logged_in');
+    localStorage.removeItem('safenet_user_type');
+    localStorage.removeItem('safenet_user_profile');
     window.location.reload();
   },
 
   login() {
     localStorage.setItem('safenet_logged_in', 'true');
+    const params = new URLSearchParams(window.location.search);
+    const redirect = params.get('redirect') || 'HomeScreen.html';
+    window.location.href = redirect;
+  },
+
+  loginAnonymous() {
+    localStorage.setItem('safenet_logged_in', 'true');
+    localStorage.setItem('safenet_user_type', 'anonymous');
+    localStorage.removeItem('safenet_user_profile');
     const params = new URLSearchParams(window.location.search);
     const redirect = params.get('redirect') || 'HomeScreen.html';
     window.location.href = redirect;
@@ -232,7 +243,8 @@ const SafeNet = {
 
     // Verificar login
     const isLoggedIn = localStorage.getItem('safenet_logged_in') === 'true';
-    if (!isLoggedIn) {
+    const userType = localStorage.getItem('safenet_user_type');
+    if (!isLoggedIn || userType === 'anonymous') {
       window.location.href = 'LoginScreen.html?redirect=ReportScreen.html';
       return;
     }

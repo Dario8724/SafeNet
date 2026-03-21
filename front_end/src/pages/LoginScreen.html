@@ -66,10 +66,16 @@
               <a href="#" class="text-xs font-bold text-primary hover:underline">Esqueceste-te?</a>
             </div>
 
-            <button type="submit"
-              class="w-full bg-primary text-white rounded-2xl px-6 py-4 font-bold text-base shadow-lg shadow-primary/20 active:scale-[0.98] transition-all hover:shadow-primary/30 border-0">
-              Entrar na conta
-            </button>
+            <div class="d-flex gap-3">
+              <button type="submit"
+                class="flex-grow-1 bg-primary text-white rounded-2xl px-6 py-4 font-bold text-base shadow-lg shadow-primary/20 active:scale-[0.98] transition-all hover:shadow-primary/30 border-0">
+                Entrar na conta
+              </button>
+              <button id="anonymousLogin" type="button"
+                class="px-6 py-4 rounded-2xl font-bold text-base border border-border bg-white text-[#1e293b] hover:border-primary/30 hover:text-primary active:scale-[0.98] transition-all">
+                Anónimo
+              </button>
+            </div>
           </form>
 
           <div class="mt-10 text-center">
@@ -109,6 +115,10 @@
       e.preventDefault();
       localStorage.setItem('safenet_user_type', currentUserType);
       SafeNet.login();
+    });
+
+    document.getElementById('anonymousLogin').addEventListener('click', () => {
+      SafeNet.loginAnonymous();
     });
 
     document.addEventListener('DOMContentLoaded', () => {
