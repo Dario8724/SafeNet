@@ -231,22 +231,54 @@ const SafeNet = {
     if (!grid) return;
 
     const resources = [
-      { icon: `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>`, title: "Linha de Ajuda", desc: "SOS Criança: 116 111. 24h.", color: "bg-alert text-alert-foreground" },
-      { icon: `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg>`, title: "Segurança Online", desc: "Dicas de proteção digital.", color: "bg-primary/10 text-primary" },
-      { icon: `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>`, title: "Cyberbullying?", desc: "Identifica os sinais.", color: "bg-secondary text-secondary-foreground" },
-      { icon: `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>`, title: "Saúde Mental", desc: "Bem-estar emocional.", color: "bg-alert text-alert-foreground" },
-      { icon: `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="19" cy="11" r="3"/></svg>`, title: "Falar com Alguém", desc: "Adultos de confiança.", color: "bg-primary/10 text-primary" },
-      { icon: `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>`, title: "Links Úteis", desc: "Organizações de apoio.", color: "bg-secondary text-secondary-foreground" }
+      { 
+        icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>`, 
+        title: "Linha de Ajuda", 
+        desc: "Liga para a Linha SOS Criança: 116 111. Disponível 24 horas.", 
+        color: "bg-[#fee2e2] text-[#ef4444]" 
+      },
+      { 
+        icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`, 
+        title: "Segurança Online", 
+        desc: "Dicas práticas para protegeres a tua presença digital.", 
+        color: "bg-[#e0f2fe] text-[#0ea5e9]" 
+      },
+      { 
+        icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>`, 
+        title: "O que é Cyberbullying?", 
+        desc: "Aprende a identificar sinais e formas de cyberbullying.", 
+        color: "bg-[#f3e8ff] text-[#a855f7]" 
+      },
+      { 
+        icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>`, 
+        title: "Saúde Mental", 
+        desc: "Cuida de ti. Recursos sobre bem-estar emocional.", 
+        color: "bg-[#fee2e2] text-[#ef4444]" 
+      },
+      { 
+        icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><circle cx="19" cy="11" r="3"/></svg>`, 
+        title: "Falar com Alguém", 
+        desc: "Como pedir ajuda a um adulto de confiança.", 
+        color: "bg-[#e0f2fe] text-[#0ea5e9]" 
+      },
+      { 
+        icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>`, 
+        title: "Links Úteis", 
+        desc: "Organizações portuguesas de apoio e proteção de jovens.", 
+        color: "bg-[#f3e8ff] text-[#a855f7]" 
+      }
     ];
 
     grid.innerHTML = resources.map((res, i) => `
-      <button class="animate-fade-up flex flex-col items-start gap-4 p-6 rounded-2xl bg-card border border-border/60 text-left card-hover shadow-sm" style="animation-delay: ${i * 100}ms;">
-        <div class="p-3 rounded-xl ${res.color}">${res.icon}</div>
+      <div class="animate-fade-up flex flex-col items-start gap-4 p-8 rounded-[2rem] bg-white border border-border/40 text-left shadow-sm hover:shadow-md transition-all duration-300" style="animation-delay: ${i * 100}ms;">
+        <div class="w-11 h-11 rounded-2xl ${res.color} flex items-center justify-center shadow-sm">
+          ${res.icon}
+        </div>
         <div>
-          <h3 class="font-bold text-base mb-1 text-foreground">${res.title}</h3>
+          <h3 class="font-bold text-lg mb-2 text-[#1e293b]">${res.title}</h3>
           <p class="text-sm text-muted-foreground leading-relaxed">${res.desc}</p>
         </div>
-      </button>
+      </div>
     `).join('');
   },
 
