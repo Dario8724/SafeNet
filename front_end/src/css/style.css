@@ -35,7 +35,13 @@ html {
 
 body {
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  background: transparent !important;
+  background:
+    linear-gradient(hsla(var(--background) / 0.965), hsla(var(--background) / 0.965)),
+    url('../images/policia.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-attachment: fixed;
   color: hsl(var(--foreground));
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
@@ -72,7 +78,7 @@ body::after {
   transition: opacity 240ms ease;
 }
 
-body > * {
+body>* {
   position: relative;
 }
 
