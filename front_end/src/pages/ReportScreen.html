@@ -35,6 +35,97 @@
           </div>
 
           <div>
+            <label class="text-sm font-bold mb-4 block text-[#1e293b]">Tipo de denúncia</label>
+            <input id="reportType" type="hidden" value="" />
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <button type="button"
+                class="w-full text-left bg-[#f8f9fa] rounded-2xl px-5 py-4 border border-transparent hover:border-primary/20 hover:bg-white active:scale-[0.995] transition-all"
+                data-report-type="Cyberstalking (Ciberperseguição)">
+                <div class="font-bold text-[#1e293b]">Cyberstalking (Ciberperseguição)</div>
+                <div class="text-sm text-muted-foreground mt-0.5">Monitorização obsessiva, recolha de dados e ameaças.
+                </div>
+              </button>
+              <button type="button"
+                class="w-full text-left bg-[#f8f9fa] rounded-2xl px-5 py-4 border border-transparent hover:border-primary/20 hover:bg-white active:scale-[0.995] transition-all"
+                data-report-type="Doxxing (Doxing)">
+                <div class="font-bold text-[#1e293b]">Doxxing (Doxing)</div>
+                <div class="text-sm text-muted-foreground mt-0.5">Divulgação de informações privadas para incitar
+                  assédio.</div>
+              </button>
+              <button type="button"
+                class="w-full text-left bg-[#f8f9fa] rounded-2xl px-5 py-4 border border-transparent hover:border-primary/20 hover:bg-white active:scale-[0.995] transition-all"
+                data-report-type="Catfishing">
+                <div class="font-bold text-[#1e293b]">Catfishing</div>
+                <div class="text-sm text-muted-foreground mt-0.5">Identidade falsa para enganar, humilhar ou extorquir.
+                </div>
+              </button>
+              <button type="button"
+                class="w-full text-left bg-[#f8f9fa] rounded-2xl px-5 py-4 border border-transparent hover:border-primary/20 hover:bg-white active:scale-[0.995] transition-all"
+                data-report-type="Fraping">
+                <div class="font-bold text-[#1e293b]">Fraping</div>
+                <div class="text-sm text-muted-foreground mt-0.5">Acesso à conta e publicação de conteúdo em nome da
+                  vítima.</div>
+              </button>
+              <button type="button"
+                class="w-full text-left bg-[#f8f9fa] rounded-2xl px-5 py-4 border border-transparent hover:border-primary/20 hover:bg-white active:scale-[0.995] transition-all"
+                data-report-type="Masquerading (Mascaramento)">
+                <div class="font-bold text-[#1e293b]">Masquerading (Mascaramento)</div>
+                <div class="text-sm text-muted-foreground mt-0.5">Identidade nova/anónima criada para perseguir a
+                  vítima.</div>
+              </button>
+              <button type="button"
+                class="w-full text-left bg-[#f8f9fa] rounded-2xl px-5 py-4 border border-transparent hover:border-primary/20 hover:bg-white active:scale-[0.995] transition-all"
+                data-report-type="Trolling (Provocação)">
+                <div class="font-bold text-[#1e293b]">Trolling (Provocação)</div>
+                <div class="text-sm text-muted-foreground mt-0.5">Ataques repetidos com sarcasmo cruel e insultos.</div>
+              </button>
+              <button type="button"
+                class="w-full text-left bg-[#f8f9fa] rounded-2xl px-5 py-4 border border-transparent hover:border-primary/20 hover:bg-white active:scale-[0.995] transition-all"
+                data-report-type="Cyber-baiting (Provocação para Reação)">
+                <div class="font-bold text-[#1e293b]">Cyber-baiting (Provocação para Reação)</div>
+                <div class="text-sm text-muted-foreground mt-0.5">Provocar até reação e depois filmar/partilhar para
+                  ridicularizar.</div>
+              </button>
+              <button type="button"
+                class="w-full text-left bg-[#f8f9fa] rounded-2xl px-5 py-4 border border-transparent hover:border-primary/20 hover:bg-white active:scale-[0.995] transition-all"
+                data-report-type="Roasting (Fritura)">
+                <div class="font-bold text-[#1e293b]">Roasting (Fritura)</div>
+                <div class="text-sm text-muted-foreground mt-0.5">“Brincadeira” que escala para ataques pessoais e
+                  humilhação.</div>
+              </button>
+              <button type="button"
+                class="w-full text-left bg-[#f8f9fa] rounded-2xl px-5 py-4 border border-transparent hover:border-primary/20 hover:bg-white active:scale-[0.995] transition-all"
+                data-report-type="Griefing">
+                <div class="font-bold text-[#1e293b]">Griefing</div>
+                <div class="text-sm text-muted-foreground mt-0.5">Abuso em videojogos para arruinar a experiência de
+                  outros.</div>
+              </button>
+              <button type="button"
+                class="w-full text-left bg-[#f8f9fa] rounded-2xl px-5 py-4 border border-transparent hover:border-primary/20 hover:bg-white active:scale-[0.995] transition-all"
+                data-report-type="Sextortion (Sextorsão)">
+                <div class="font-bold text-[#1e293b]">Sextortion (Sextorsão)</div>
+                <div class="text-sm text-muted-foreground mt-0.5">Chantagem com imagens/vídeos íntimos para exigir
+                  dinheiro ou mais conteúdo.</div>
+              </button>
+              <button type="button"
+                class="w-full text-left bg-[#f8f9fa] rounded-2xl px-5 py-4 border border-transparent hover:border-primary/20 hover:bg-white active:scale-[0.995] transition-all"
+                data-report-type="Slut-shaming">
+                <div class="font-bold text-[#1e293b]">Slut-shaming</div>
+                <div class="text-sm text-muted-foreground mt-0.5">Ataques sobre sexualidade/aparência para envergonhar.
+                </div>
+              </button>
+              <button type="button"
+                class="w-full text-left bg-[#f8f9fa] rounded-2xl px-5 py-4 border border-transparent hover:border-primary/20 hover:bg-white active:scale-[0.995] transition-all"
+                data-report-type="Happy Slapping">
+                <div class="font-bold text-[#1e293b]">Happy Slapping</div>
+                <div class="text-sm text-muted-foreground mt-0.5">Agressão física filmada para publicar e partilhar
+                  online.</div>
+              </button>
+            </div>
+            <div id="reportTypeHint" class="text-sm text-muted-foreground mt-3">Seleciona uma opção para continuar.
+            </div>
+          </div>
+          <div>
             <label class="text-sm font-bold mb-4 block text-[#1e293b]">Onde aconteceu?</label>
             <div class="relative">
               <button id="platformDropdownBtn"

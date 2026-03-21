@@ -3,6 +3,9 @@
 
   SafeNet.initReport = function () {
     const desc = document.getElementById('description');
+    const typeField = document.getElementById('reportType');
+    const typeHint = document.getElementById('reportTypeHint');
+    const typeButtons = Array.from(document.querySelectorAll('[data-report-type]'));
     const pBtn = document.getElementById('platformDropdownBtn');
     const pDrop = document.getElementById('platformDropdown');
     const sPlat = document.getElementById('selectedPlatform');
@@ -16,11 +19,13 @@
     const userType = localStorage.getItem('safenet_user_type') || '';
     const needsAuthToSubmit = !isLoggedIn;
     const draftKey = 'safenet_report_draft';
+    const requiresType = typeButtons.length > 0;
 
     const saveDraft = () => {
       const draft = {
         description: desc.value || '',
-        platform: (sPlat && !sPlat.classList.contains('text-muted-foreground')) ? (sPlat.innerText || '') : ''
+        platform: (sPlat && !sPlat.classList.contains('text-muted-foreground')) ? (sPlat.innerText || '') : '',
+        type: typeField ? (typeField.value || '') : ''
       };
       sessionStorage.setItem(draftKey, JSON.stringify(draft));
     };
@@ -36,10 +41,44 @@
         sPlat.classList.remove('text-muted-foreground');
         sPlat.classList.add('text-foreground');
       }
+      if (draft && typeof draft.type === 'string' && draft.type.trim() && typeField) {
+        typeField.value = draft.type.trim();
+      }
       sessionStorage.removeItem(draftKey);
     };
 
     restoreDraft();
+
+    const updateTypeUI = () => {
+      if (!requiresType) return;
+      const selected = typeField ? (typeField.value || '').trim() : '';
+      typeButtons.forEach(btn => {
+        const val = (btn.getAttribute('data-report-type') || '').trim();
+        const active = selected && val === selected;
+        btn.classList.toggle('border-primary/40', active);
+        btn.classList.toggle('bg-white', active);
+        btn.classList.toggle('shadow-sm', active);
+        btn.setAttribute('aria-pressed', active ? 'true' : 'false');
+      });
+      if (typeHint) typeHint.classList.toggle('hidden', !!selected);
+    };
+
+    const updateSubmitState = () => {
+      const hasDesc = !!(desc.value || '').trim();
+      const hasType = !requiresType || !!((typeField && typeField.value) ? typeField.value.trim() : '');
+      sBtn.disabled = !(hasDesc && hasType);
+    };
+
+    if (requiresType && typeField) {
+      typeButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          typeField.value = (btn.getAttribute('data-report-type') || '').trim();
+          updateTypeUI();
+          updateSubmitState();
+        });
+      });
+      updateTypeUI();
+    }
 
     if (needsAuthToSubmit) {
       const container = document.querySelector('main .container');
@@ -90,7 +129,8 @@
       });
     }
 
-    desc.addEventListener('input', (e) => sBtn.disabled = !e.target.value.trim());
+    desc.addEventListener('input', updateSubmitState);
+    updateSubmitState();
     sBtn.addEventListener('click', () => {
       if (needsAuthToSubmit) {
         saveDraft();
@@ -100,6 +140,8 @@
 
       const description = desc.value.trim();
       if (!description) return;
+      const selectedType = requiresType && typeField ? (typeField.value || '').trim() : '';
+      if (requiresType && !selectedType) return;
 
       const platformText = (sPlat && !sPlat.classList.contains('text-muted-foreground')) ? (sPlat.innerText || '').trim() : '';
       const profileRaw = localStorage.getItem('safenet_user_profile');
@@ -121,6 +163,7 @@
         id,
         createdAt: new Date().toISOString(),
         status: 'Pendente',
+        type: selectedType || 'Não indicado',
         platform: platformText || 'Não indicado',
         description,
         evidenceCount: filesCount,
