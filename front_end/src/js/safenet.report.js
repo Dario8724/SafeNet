@@ -55,12 +55,10 @@
       typeButtons.forEach(btn => {
         const val = (btn.getAttribute('data-report-type') || '').trim();
         const active = selected && val === selected;
-        btn.classList.toggle('border-primary/40', active);
-        btn.classList.toggle('bg-white', active);
-        btn.classList.toggle('shadow-sm', active);
+        btn.classList.toggle('safenet-report-type-active', active);
         btn.setAttribute('aria-pressed', active ? 'true' : 'false');
       });
-      if (typeHint) typeHint.classList.toggle('hidden', !!selected);
+      if (typeHint) typeHint.classList.toggle('d-none', !!selected);
     };
 
     const updateSubmitState = () => {
