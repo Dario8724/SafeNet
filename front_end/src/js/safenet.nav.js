@@ -12,6 +12,7 @@
       ? `<a href="PSPScreen.html" class="nav-link">Painel PSP</a>`
       : `
             <a href="HomeScreen.html" class="nav-link">Início</a>
+            <a href="InfoScreen.html" class="nav-link">Informação</a>
             <a href="ChatScreen.html" class="nav-link">Chat de Apoio</a>
             <a href="ResourcesScreen.html" class="nav-link">Recursos</a>
             <a href="ReportScreen.html" class="nav-link">Denúncia</a>
@@ -92,6 +93,7 @@
           ? `<a href="PSPScreen.html" class="nav-link d-block">Painel PSP</a>`
           : `
             <a href="HomeScreen.html" class="nav-link d-block">Início</a>
+            <a href="InfoScreen.html" class="nav-link d-block">Informação</a>
             <a href="ChatScreen.html" class="nav-link d-block">Chat de Apoio</a>
             <a href="ResourcesScreen.html" class="nav-link d-block">Recursos</a>
             <a href="ReportScreen.html" class="nav-link d-block">Denúncia</a>
@@ -152,30 +154,23 @@
   };
 
   SafeNet.logout = function () {
-    localStorage.removeItem('safenet_logged_in');
-    localStorage.removeItem('safenet_user_type');
-    localStorage.removeItem('safenet_user_profile');
-    window.location.reload();
+    const run = async () => {
+      if (SafeNet.authLogout) await SafeNet.authLogout();
+      else {
+        localStorage.removeItem('safenet_logged_in');
+        localStorage.removeItem('safenet_user_type');
+        localStorage.removeItem('safenet_user_profile');
+        localStorage.removeItem('safenet_auth_token');
+      }
+      window.location.reload();
+    };
+    run();
   };
 
   SafeNet.login = function () {
     localStorage.setItem('safenet_logged_in', 'true');
     const params = new URLSearchParams(window.location.search);
     const redirect = params.get('redirect') || 'HomeScreen.html';
-    window.location.href = redirect;
-  };
-
-  SafeNet.loginAnonymous = function (email) {
-    localStorage.setItem('safenet_logged_in', 'true');
-    localStorage.setItem('safenet_user_type', 'anonymous');
-    const normalizedEmail = (email || '').trim();
-    if (normalizedEmail) {
-      localStorage.setItem('safenet_user_profile', JSON.stringify({ nome: 'Anónimo', email: normalizedEmail }));
-    } else {
-      localStorage.setItem('safenet_user_profile', JSON.stringify({ nome: 'Anónimo', email: '' }));
-    }
-    const params = new URLSearchParams(window.location.search);
-    const redirect = params.get('redirect') || 'ReportScreen.html';
     window.location.href = redirect;
   };
 

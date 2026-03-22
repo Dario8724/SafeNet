@@ -24,7 +24,7 @@
     }
 
     const reportsKey = 'safenet_reports';
-    const loadReports = () => {
+    const loadReportsLocal = () => {
       const raw = localStorage.getItem(reportsKey);
       try {
         const arr = raw ? JSON.parse(raw) : [];
@@ -34,8 +34,27 @@
       }
     };
 
-    const saveReports = (reports) => {
+    const saveReportsLocal = (reports) => {
       localStorage.setItem(reportsKey, JSON.stringify(reports));
+    };
+
+    const normalizeReports = (payload) => {
+      if (Array.isArray(payload)) return payload;
+      if (payload && Array.isArray(payload.content)) return payload.content;
+      if (payload && Array.isArray(payload.data)) return payload.data;
+      if (payload && payload.data && Array.isArray(payload.data.content)) return payload.data.content;
+      return null;
+    };
+
+    const loadReports = async () => {
+      try {
+        if (SafeNet.api && typeof SafeNet.api.listReports === 'function') {
+          const remote = await SafeNet.api.listReports();
+          const arr = normalizeReports(remote);
+          if (arr) return arr;
+        }
+      } catch { }
+      return loadReportsLocal();
     };
 
     const formatDate = (iso) => {
@@ -93,17 +112,28 @@
       modal.show();
     };
 
-    const setStatus = (id, nextStatus) => {
-      const reports = loadReports();
-      const idx = reports.findIndex(r => r.id === id);
-      if (idx === -1) return;
-      reports[idx].status = nextStatus;
-      saveReports(reports);
+    const setStatus = async (id, nextStatus) => {
+      let updatedRemote = false;
+      try {
+        if (SafeNet.api && typeof SafeNet.api.updateReportStatus === 'function') {
+          await SafeNet.api.updateReportStatus(id, nextStatus);
+          updatedRemote = true;
+        }
+      } catch { }
+
+      if (!updatedRemote) {
+        const reports = loadReportsLocal();
+        const idx = reports.findIndex(r => r.id === id);
+        if (idx === -1) return;
+        reports[idx].status = nextStatus;
+        saveReportsLocal(reports);
+      }
+
       render();
     };
 
-    const render = () => {
-      const reports = loadReports();
+    const render = async () => {
+      const reports = await loadReports();
       computeCounts(reports);
       const visible = applyFilters(reports);
       tbody.innerHTML = visible.map(r => `
@@ -126,12 +156,13 @@
         btn.addEventListener('click', () => {
           const id = btn.getAttribute('data-id');
           const action = btn.getAttribute('data-psp-action');
-          const reports = loadReports();
-          const report = reports.find(r => r.id === id);
-          if (!report) return;
-          if (action === 'view') openModal(report);
-          if (action === 'progress') setStatus(id, 'Em progresso');
-          if (action === 'resolve') setStatus(id, 'Resolvido');
+          loadReports().then(reports => {
+            const report = reports.find(r => r.id === id);
+            if (!report) return;
+            if (action === 'view') openModal(report);
+            if (action === 'progress') setStatus(id, 'Em progresso');
+            if (action === 'resolve') setStatus(id, 'Resolvido');
+          });
         });
       });
     };
@@ -175,14 +206,14 @@
             reporter: { type: 'citizen', name: 'Maria Silva', phone: '9xx xxx xxx', email: 'maria@example.com' }
           }
         ];
-        saveReports(sample);
+        saveReportsLocal(sample);
         render();
       });
     }
 
     if (clearBtn) {
       clearBtn.addEventListener('click', () => {
-        saveReports([]);
+        saveReportsLocal([]);
         render();
       });
     }
