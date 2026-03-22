@@ -123,3 +123,21 @@ CREATE TABLE relatorio_psp (
     FOREIGN KEY (den_id) REFERENCES denuncia(den_id)   ON DELETE CASCADE,
     FOREIGN KEY (psp_id) REFERENCES agente_psp(psp_id) ON DELETE RESTRICT
 );
+
+--11. Flyway_schema_history; 
+CREATE TABLE flyway_schema_history (
+    installed_rank  INT           NOT NULL,
+    version         VARCHAR(50)   NULL,
+    description     VARCHAR(200)  NOT NULL,
+    type            VARCHAR(20)   NOT NULL,
+    script          VARCHAR(1000) NOT NULL,
+    checksum        INT           NULL,
+    installed_by    VARCHAR(100)  NOT NULL,
+    installed_on    TIMESTAMP     NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    execution_time  INT           NOT NULL,
+    success         TINYINT(1)    NOT NULL,
+
+    PRIMARY KEY (installed_rank)
+);
+
+CREATE INDEX flyway_schema_history_s_idx ON flyway_schema_history (success);
