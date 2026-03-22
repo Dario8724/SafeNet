@@ -13,7 +13,7 @@ Direcionado principalmente a jovens, crianças, encarregados de educação e com
 ---
 ##  Sobre o Projeto
 
-é uma aplicação móvel e plataforma web desenvolvida para fornecer apoio a utilizadores vítimas de cyberbullying, bem como para promover a sensibilização e informação junto da comunidade. A solução visa colaborar com a PSP no processo de prevenção, identificação e denúncia de situações de cyberbullying, através de uma abordagem digital acessível e eficiente.
+é uma aplicação web e plataforma web desenvolvida para fornecer apoio a utilizadores vítimas de cyberbullying, bem como para promover a sensibilização e informação junto da comunidade. A solução visa colaborar com a PSP no processo de prevenção, identificação e denúncia de situações de cyberbullying, através de uma abordagem digital acessível e eficiente.
 
 A aplicação permite ao utilizador obter apoio de forma rápida e estruturada, integrando um sistema de chat interativo que possibilita tanto o acesso a informação como a realização de denúncias diretamente na plataforma.
 
