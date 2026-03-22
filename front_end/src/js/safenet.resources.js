@@ -250,6 +250,144 @@
       document.body.appendChild(wrapper.firstElementChild);
     };
 
+    const ensureNewsUpdatesModal = () => {
+      if (document.getElementById('newsUpdatesModal')) return;
+
+      const wrapper = document.createElement('div');
+      wrapper.innerHTML = `
+        <div class="modal fade" id="newsUpdatesModal" tabindex="-1" aria-labelledby="newsUpdatesModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
+            <div class="modal-content border-0 overflow-hidden" style="border-radius: 2rem;">
+              <div class="modal-header px-4 px-md-5 py-4 border-0">
+                <div>
+                  <div class="text-primary fw-black small tracking-[0.2em] text-uppercase">Notícias e atualizações</div>
+                  <h2 id="newsUpdatesModalLabel" class="h4 fw-black mb-0">O que está a acontecer</h2>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+              </div>
+              <div class="modal-body px-4 px-md-5 pb-5 pt-0">
+                <div class="card-modern p-2 p-md-3 mb-4">
+                  <ul class="nav nav-pills nav-fill gap-2" id="newsUpdatesTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link active" id="news-updates-news-tab" data-bs-toggle="pill" data-bs-target="#news-updates-news" type="button" role="tab" aria-controls="news-updates-news" aria-selected="true">Notícias</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link" id="news-updates-events-tab" data-bs-toggle="pill" data-bs-target="#news-updates-events" type="button" role="tab" aria-controls="news-updates-events" aria-selected="false">Eventos</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link" id="news-updates-alerts-tab" data-bs-toggle="pill" data-bs-target="#news-updates-alerts" type="button" role="tab" aria-controls="news-updates-alerts" aria-selected="false">Alertas</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link" id="news-updates-cases-tab" data-bs-toggle="pill" data-bs-target="#news-updates-cases" type="button" role="tab" aria-controls="news-updates-cases" aria-selected="false">Casos</button>
+                    </li>
+                  </ul>
+                </div>
+
+                <div class="tab-content" id="newsUpdatesTabContent">
+                  <div class="tab-pane fade show active" id="news-updates-news" role="tabpanel" aria-labelledby="news-updates-news-tab" tabindex="0">
+                    <h3 class="fw-black h5 mb-3">Notícias recentes</h3>
+                    <div class="row g-4">
+                      <div class="col-md-6">
+                        <div class="card-modern p-5 h-100">
+                          <div class="fw-black text-[#1e293b] mb-2">Caso de cyberbullying em escola de Lisboa</div>
+                          <p class="text-muted-foreground mb-0">Um grupo de estudantes criou um perfil falso no Instagram para gozar com um colega, partilhando fotos editadas e mensagens ofensivas. O caso foi reportado à direção da escola e às autoridades.</p>
+                          <div class="small text-muted-foreground mt-3">Lisboa • Há 2 dias</div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="card-modern p-5 h-100">
+                          <div class="fw-black text-[#1e293b] mb-2">Tentativa de burla através de WhatsApp</div>
+                          <p class="text-muted-foreground mb-0">Vários jovens em Almada receberam mensagens a pedir dinheiro, fingindo ser familiares. A PSP alerta para nunca transferir dinheiro sem confirmar a identidade.</p>
+                          <div class="small text-muted-foreground mt-3">Almada • Há 1 semana</div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="card-modern p-5 h-100">
+                          <div class="fw-black text-[#1e293b] mb-2">Divulgação de fotos sem consentimento</div>
+                          <p class="text-muted-foreground mb-0">Um caso em Oeiras envolveu a partilha de imagens privadas num grupo escolar. A vítima recebeu apoio psicológico e o caso está a ser investigado.</p>
+                          <div class="small text-muted-foreground mt-3">Oeiras • Há 3 dias</div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="card-modern p-5 h-100">
+                          <div class="fw-black text-[#1e293b] mb-2">Conta de gaming usada para assédio</div>
+                          <p class="text-muted-foreground mb-0">Um jogador foi alvo de insultos e ameaças constantes durante jogos online. A plataforma suspendeu as contas envolvidas após denúncia.</p>
+                          <div class="small text-muted-foreground mt-3">Sintra • Há 5 dias</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="tab-pane fade" id="news-updates-events" role="tabpanel" aria-labelledby="news-updates-events-tab" tabindex="0">
+                    <h3 class="fw-black h5 mb-3">Eventos e ações</h3>
+                    <div class="row g-4">
+                      <div class="col-md-6">
+                        <div class="card-modern p-5 h-100">
+                          <div class="fw-black mb-2">Workshop de segurança digital</div>
+                          <p class="text-muted-foreground mb-3">Sessão numa escola secundária de Lisboa sobre privacidade online e prevenção do cyberbullying.</p>
+                          <span class="badge text-bg-primary">Evento educativo</span>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="card-modern p-5 h-100">
+                          <div class="fw-black mb-2">Campanha “Internet Segura”</div>
+                          <p class="text-muted-foreground mb-3">Iniciativa local com distribuição de guias e palestras para jovens e pais.</p>
+                          <span class="badge text-bg-primary">Campanha</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="tab-pane fade" id="news-updates-alerts" role="tabpanel" aria-labelledby="news-updates-alerts-tab" tabindex="0">
+                    <h3 class="fw-black h5 mb-3">Alertas de segurança</h3>
+                    <div class="row g-4">
+                      <div class="col-md-4">
+                        <div class="card-modern p-5 h-100">
+                          <div class="fw-black mb-2">Perfis falsos</div>
+                          <p class="text-muted-foreground mb-0">Verifica sempre quem te adiciona. Muitos ataques começam com contas falsas.</p>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="card-modern p-5 h-100">
+                          <div class="fw-black mb-2">Links suspeitos</div>
+                          <p class="text-muted-foreground mb-0">Não cliques em links desconhecidos, podem roubar dados.</p>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="card-modern p-5 h-100">
+                          <div class="fw-black mb-2">Partilha de dados</div>
+                          <p class="text-muted-foreground mb-0">Nunca partilhes passwords ou informações pessoais.</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="tab-pane fade" id="news-updates-cases" role="tabpanel" aria-labelledby="news-updates-cases-tab" tabindex="0">
+                    <h3 class="fw-black h5 mb-3">Casos resolvidos</h3>
+                    <div class="row g-4">
+                      <div class="col-md-6">
+                        <div class="card-modern p-5 h-100">
+                          <div class="fw-black mb-2">Investigação a grupo de cyberbullying</div>
+                          <p class="text-muted-foreground mb-0">Um grupo responsável por ataques online foi identificado após denúncia. Foram aplicadas medidas disciplinares e acompanhamento.</p>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="card-modern p-5 h-100">
+                          <div class="fw-black mb-2">Caso de extorsão digital travado</div>
+                          <p class="text-muted-foreground mb-0">Um jovem foi alvo de chantagem online, mas conseguiu ajuda rapidamente. O suspeito foi identificado.</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(wrapper.firstElementChild);
+    };
+
     const resources = [
       {
         icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>`,
@@ -270,15 +408,16 @@
         title: "Notícias e atualizações",
         desc: "Notícias, eventos e alertas sobre segurança digital.",
         color: "bg-[#f3e8ff] text-[#a855f7]",
-        href: "NewsAndUpdates.html"
+        action: "newsUpdates"
       }
     ];
 
     ensureHelpPanel();
     ensureSecurityTipsModal();
+    ensureNewsUpdatesModal();
 
     grid.innerHTML = resources.map((res, i) => `
-      <${res.href ? `a href="${res.href}"` : res.action ? 'button type="button"' : 'div'} ${res.action === 'helpLine' ? 'data-bs-toggle="modal" data-bs-target="#helpLineModal" aria-haspopup="dialog"' : res.action === 'securityTips' ? 'data-bs-toggle="modal" data-bs-target="#securityTipsModal" aria-haspopup="dialog"' : ''} class="animate-fade-up flex flex-col items-start gap-4 p-8 rounded-[2rem] bg-white border border-border/40 text-left shadow-sm hover:shadow-md transition-all duration-300 text-decoration-none w-100" style="animation-delay: ${i * 100}ms;">
+      <${res.href ? `a href="${res.href}"` : res.action ? 'button type="button"' : 'div'} ${res.action === 'helpLine' ? 'data-bs-toggle="modal" data-bs-target="#helpLineModal" aria-haspopup="dialog"' : res.action === 'securityTips' ? 'data-bs-toggle="modal" data-bs-target="#securityTipsModal" aria-haspopup="dialog"' : res.action === 'newsUpdates' ? 'data-bs-toggle="modal" data-bs-target="#newsUpdatesModal" aria-haspopup="dialog"' : ''} class="animate-fade-up flex flex-col items-start gap-4 p-8 rounded-[2rem] bg-white border border-border/40 text-left shadow-sm hover:shadow-md transition-all duration-300 text-decoration-none w-100" style="animation-delay: ${i * 100}ms;">
         <div class="w-11 h-11 rounded-2xl ${res.color} flex items-center justify-center shadow-sm">
           ${res.icon}
         </div>
