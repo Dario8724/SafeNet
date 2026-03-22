@@ -8,7 +8,7 @@ Levando em conta os dados atuais, que revelam uma realidade que continua a exigi
 
 ## Público-Alvo
 
-Direcionado principalmente a jovens, crianças, encarregados de educação e comunidades educativas, sendo tambem util para cidadão que necessitem de apoio ou que queiram denunciar situações de cyberbully.
+Direcionado principalmente a jovens, crianças, encarregados de educação e comunidades educativas, sendo também util para cidadão que necessitem de apoio ou que queiram denunciar situações de cyberbully.
 
 ---
 ##  Sobre o Projeto
